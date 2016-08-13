@@ -63,8 +63,8 @@ export class Router extends SyncSubject<LocationChange> {
    * Changes the browsers URL to the normalized version of the given URL, and pushes a
    * new item onto the platform's history.
    */
-  go(path: string, query: any = ''): void {
-    this.platformStrategy.pushState(null, '', path, _normalizeQuery(query));
+  go(path: string, query: any = '', state: any = null): void {
+    this.platformStrategy.pushState(state, '', path, _normalizeQuery(query));
     this._update('push');
   }
 
@@ -72,8 +72,8 @@ export class Router extends SyncSubject<LocationChange> {
    * Changes the browsers URL to the normalized version of the given URL, and replaces
    * the top item on the platform's history stack.
    */
-  replace(path: string, query: any = ''): void {
-    this.platformStrategy.replaceState(null, '', path, _normalizeQuery(query));
+  replace(path: string, query: any = '', state: any = null): void {
+    this.platformStrategy.replaceState(state, '', path, _normalizeQuery(query));
     this._update('replace');
   }
 
@@ -81,10 +81,10 @@ export class Router extends SyncSubject<LocationChange> {
    * Changes the browsers query parameters. Replaces the top item on the platform's
    * history stack
    */
-   search(query: any = ''): void {
+   search(query: any = '', state: any = null): void {
      const [ pathname ] = this.path().split('?');
 
-     this.replace(pathname, query);
+     this.replace(pathname, query, state);
    }
 
   /**

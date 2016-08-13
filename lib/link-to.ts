@@ -25,8 +25,13 @@ export class LinkTo {
     this._updateHref();
   }
 
+  @Input() set stateParams(params: string | Object) {
+    this._state = params;
+  }
+
   private _href: string;
   private _query: string | Object;
+  private _state: string | Object;
 
   constructor(private _router: Router) {}
 
@@ -37,7 +42,7 @@ export class LinkTo {
   @HostListener('click', ['$event'])
   onClick(event) {
     if (!this._comboClick(event) && !this.target) {
-      this._router.go(this._href, this._query);
+      this._router.go(this._href, this._query, this._state);
 
       event.preventDefault();
     }
